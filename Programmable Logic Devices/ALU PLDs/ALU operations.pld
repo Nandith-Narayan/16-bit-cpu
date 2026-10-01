@@ -1,0 +1,84 @@
+GAL22V10
+ALU_operations
+
+M0    M1    NC    A0    A1    A2    A3    B0    B1    B2    B3   GND
+CIN   NC   O3    O2    O1    O0    NC   C1    C2    C3    COUT   VCC
+
+; Carry
+C1 = /M1 * /M0 * A0 * B0 +
+     /M1 * /M0 * A0 * CIN +
+     /M1 * /M0 * CIN * B0
+
+C2 = /M1 * /M0 * A1 * B1 +
+     /M1 * /M0 * A1 * C1 +
+     /M1 * /M0 * C1 * B1
+     
+C3 = /M1 * /M0 * A2 * B2 +
+     /M1 * /M0 * A2 * C2 +
+     /M1 * /M0 * C2 * B2
+     
+COUT = /M1 * /M0 * A3 * B3 +
+     /M1 * /M0 * A3 * C3 +
+     /M1 * /M0 * C3 * B3
+
+; Output bits
+O0 = /M1 * /M0 * /A0 * /B0 * /CIN + ; Addition
+     /M1 * /M0 * /A0 * B0 * /CIN +  ; (Mode = 00) and (A0 xor B1 xor CIN)
+     /M1 * /M0 * A0 * /B0 * /CIN + 
+     /M1 * /M0 * A0 * B0 * CIN +
+     
+     /M1 * M0 * A0 * B0 + ; A0 and B0
+     
+     M1 * /M0 * A0 + ; A0 or B0
+     M1 * /M0 * B0 +
+
+     M1 * M0 * /A0 * B0 + ; A0 xor B0
+     M1 * M0 * A0 * /B0
+     
+O1 = /M1 * /M0 * /A1 * /B1 * /C1 + ; Addition
+     /M1 * /M0 * /A1 * B1 * /C1 +  ; (Mode = 00) and (A1 xor B1 xor C1)
+     /M1 * /M0 * A1 * /B1 * /C1 + 
+     /M1 * /M0 * A1 * B1 * C1 +
+     
+     /M1 * M0 * A1 * B1 + ; A1 and B1
+     
+     M1 * /M0 * A1 + ; A1 or B1
+     M1 * /M0 * B1 +
+
+     M1 * M0 * /A1 * B1 + ; A1 xor B1
+     M1 * M0 * A1 * /B1
+     
+O2 = /M1 * /M0 * /A2 * /B2 * /C2 + ; Addition
+     /M1 * /M0 * /A2 * B2 * /C2 +  ; (Mode = 00) and (A2 xor B2 xor C2)
+     /M1 * /M0 * A2 * /B2 * /C2 + 
+     /M1 * /M0 * A2 * B2 * C2 +
+     
+     /M1 * M0 * A2 * B2 + ; A2 and B2
+     
+     M1 * /M0 * A2 + ; A2 or B2
+     M1 * /M0 * B2 +
+
+     M1 * M0 * /A2 * B2 + ; A2 xor B2
+     M1 * M0 * A2 * /B2
+     
+O3 = /M1 * /M0 * /A3 * /B3 * /C3 + ; Addition
+     /M1 * /M0 * /A3 * B3 * /C3 +  ; (Mode = 00) and (A3 xor B3 xor C3)
+     /M1 * /M0 * A3 * /B3 * /C3 + 
+     /M1 * /M0 * A3 * B3 * C3 +
+     
+     /M1 * M0 * A3 * B3 + ; A3 and B3
+     
+     M1 * /M0 * A3 + ; A3 or B3
+     M1 * /M0 * B3 +
+
+     M1 * M0 * /A3 * B3 + ; A3 xor B3
+     M1 * M0 * A3 * /B0
+     
+DESCRIPTION
+
+First half of ALU Operations.
+
+ADD A,B
+AND A,B 
+OR A,B
+XOR A,B
